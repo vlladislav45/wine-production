@@ -30,73 +30,84 @@ public class JDBCConnector {
         try (Statement stmt = conn.createStatement()) {
             String createUserRolesQuery =
                     "CREATE TABLE IF NOT EXISTS USER_ROLES (" +
-                            "id INT PRIMARY KEY AUTO_INCREMENT, " +
-                            "user_roles VARCHAR(30) NOT NULL UNIQUE )";
-
-            String createUsersQuery =
-                    "CREATE TABLE IF NOT EXISTS USERS(" +
-                            "user_id INT PRIMARY KEY AUTO_INCREMENT," +
-                            "username VARCHAR(30) NOT NULL UNIQUE ," +
-                            "password VARCHAR(30) NOT NULL, " +
-                            "role INT NOT NULL," +
-                            "CONSTRAINT fk_user_role FOREIGN KEY (role) REFERENCES USER_ROLES(id))";
-
-            String createGrapesQuery =
-                    "CREATE TABLE IF NOT EXISTS GRAPES (" +
-                            "id INT PRIMARY KEY AUTO_INCREMENT, " +
-                            "variety INT NOT NULL, " +
-                            "quantity INT NOT NULL, " +
-                            "FOREIGN KEY(variety) REFERENCES VARIETY(id))";
-
-            String createWinesQuery =
-                    "CREATE TABLE IF NOT EXISTS WINES(" +
-                            "id INT PRIMARY KEY AUTO_INCREMENT," +
-                            "wine_name VARCHAR(30) NOT NULL, " +
-                            "type VARCHAR(15) NOT NULL," +
-                            "grapes INT NOT NULL," +
-                            "FOREIGN KEY(grapes) references WINE_GRAPES(grape_id))";
-
-            String createWineGrapes =
-                    "CREATE TABLE IF NOT EXISTS WINE_GRAPES(" +
-                    "wine_id INT NOT NULL," +
-                    "grape_id INT NOT NULL," +
-                    "FOREIGN KEY(wine_id) REFERENCES WINES(id)," +
-                    "FOREIGN KEY(grape_id) REFERENCES GRAPES(id))";
-
+                            "id_role INT PRIMARY KEY AUTO_INCREMENT, " +
+                            "user_role VARCHAR(15) NOT NULL UNIQUE )";
 
             String createVarietyQuery =
-                    "CREATE TABLE IF NOT EXISTS VARIETY (" +
-                            "id INT PRIMARY KEY AUTO_INCREMENT, " +
-                            "variety VARCHAR(30) NOT NULL UNIQUE )";
+                    "CREATE TABLE IF NOT EXISTS VARIETIES (" +
+                            "id_variety INT PRIMARY KEY AUTO_INCREMENT, " +
+                            "variety_name VARCHAR(30) NOT NULL UNIQUE )";
 
             String createBottlesQuery =
                     "CREATE TABLE IF NOT EXISTS BOTTLES (" +
-                            "id INT PRIMARY KEY AUTO_INCREMENT, " +
-                            "volume TINYINT(255) UNSIGNED NOT NULL, " +
-                            "quantity int(255) UNSIGNED NOT NULL )";
+                            "bottle_volume INT PRIMARY KEY , " +
+                            "bottle_quantity INT UNSIGNED NOT NULL )";
+
+            String createWineTypesQuery =
+                    "CREATE TABLE IF NOT EXISTS WINE_TYPES (" +
+                            "id_type INT PRIMARY KEY AUTO_INCREMENT, " +
+                            "type_name VARCHAR(30) NOT NULL UNIQUE )";
+
+            String createUsersQuery =
+                    "CREATE TABLE IF NOT EXISTS USERS(" +
+                            "id_user INT PRIMARY KEY AUTO_INCREMENT," +
+                            "username VARCHAR(30) NOT NULL UNIQUE ," +
+                            "user_pass VARCHAR(30) NOT NULL, " +
+                            "id_role INT NOT NULL," +
+                            "FOREIGN KEY (id_role) REFERENCES USER_ROLES(id_role))";
+
+            String createGrapesQuery =
+                    "CREATE TABLE IF NOT EXISTS GRAPES (" +
+                            "id_grape INT PRIMARY KEY AUTO_INCREMENT, " +
+                            "id_variety INT NOT NULL, " +
+                            "grape_quantity FLOAT(6,2) NOT NULL, " +
+                            "id_user INT NOT NULL," +
+                            "FOREIGN KEY(id_variety) REFERENCES VARIETIES(id_variety)," +
+                            "FOREIGN KEY(id_user) REFERENCES USERS(id_user))";
+
+            String createWinesQuery =
+                    "CREATE TABLE IF NOT EXISTS WINES(" +
+                            "id_wine INT PRIMARY KEY AUTO_INCREMENT," +
+                            "wine_name VARCHAR(30) NOT NULL, " +
+                            "id_type INT NOT NULL," +
+                            "id_grape INT NOT NULL," +
+                            "FOREIGN KEY(id_grape) REFERENCES GRAPES(id_grape)," +
+                            "FOREIGN KEY(id_type) REFERENCES WINE_TYPES(id_type))";
+
+            String createBottledWineQuery =
+                    "CREATE TABLE IF NOT EXISTS BOTTLED_WINE(" +
+                            "id_wine INT NOT NULL," +
+                            "bottle_type INT NOT NULL," +
+                            "id_user INT NOT NULL, " +
+                            "quantity_bottled INT NOT NULL ," +
+                            "FOREIGN KEY(id_wine) REFERENCES WINES(id_wine),"+
+                            "FOREIGN KEY(bottle_type) REFERENCES BOTTLES(bottle_volume),"+
+                            "FOREIGN KEY(id_user) REFERENCES USERS(id_user))";
 
 
             stmt.executeUpdate(createUserRolesQuery);
             System.out.println("CREATED USER ROLES SUCCESSFULLY");
-            stmt.executeUpdate(createUsersQuery);
-            System.out.println("CREATED USERS SUCCESSFULLY");
+
+            stmt.executeUpdate(createWineTypesQuery);
+            System.out.println("CREATED WINE TYPES TABLE SUCCESSFULLY");
 
             stmt.executeUpdate(createVarietyQuery);
             System.out.println("CREATED VARIETY TABLE SUCCESSFULLY");
-            stmt.executeUpdate(createGrapesQuery);
-            System.out.println("CREATE TABLE GRAPES SUCCESSFULLY");
-
-
-            stmt.executeUpdate(createWinesQuery);
-            System.out.println("CREATED WINES SUCCESSFULLY");
-
-            stmt.executeUpdate(createWineGrapes);
-            System.out.println("CREATED WINE GRAPE JOIN TABLE SUCCESSFULLY");
 
             stmt.executeUpdate(createBottlesQuery);
             System.out.println("CREATE TABLE BOTTLES SUCCESSFULLY");
 
+            stmt.executeUpdate(createUsersQuery);
+            System.out.println("CREATED USERS SUCCESSFULLY");
 
+            stmt.executeUpdate(createGrapesQuery);
+            System.out.println("CREATE TABLE GRAPES SUCCESSFULLY");
+
+            stmt.executeUpdate(createWinesQuery);
+            System.out.println("CREATED WINES SUCCESSFULLY");
+
+            stmt.executeUpdate(createBottledWineQuery);
+            System.out.println("CREATE TABLE BOTTLED WINE SUCCESSFULLY");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("FAILED TO CREATE TABLES ");
@@ -188,7 +199,6 @@ public class JDBCConnector {
     public Map<String, Object> executeQueryWithSingleResult(String query) {
         Map<String, Object> resultColumnsMap = new HashMap<>();
 
-        //Intellij suggested naming 'ignored'
         try (Statement stmt = conn.createStatement();
              PreparedStatement ignored = conn.prepareStatement(query)) {
             ResultSet r = stmt.executeQuery(query);
@@ -197,12 +207,13 @@ public class JDBCConnector {
             //if the result returned no values, it will throw IndexOutOfBoundException
             //and will return empty Map
             resultColumnsMap = parseResultSetToMap(r).get(0);
-//            LOGGER.info("Successfully fetched query: " + query);
+            System.out.println("Successfully fetched query: " + query);
             return resultColumnsMap;
         } catch (SQLException e) {
-//            LOGGER.error("Failed to execute query " + query, e);
+            e.printStackTrace();
         } catch (IndexOutOfBoundsException iob) {
             //Thrown when #parseResultSetToMap returns empty list ( ResultSet was empty)
+            System.out.println("No results found for query " + query);
 //            LOGGER.info("No results found for query: " + query);
         }
 
