@@ -1,7 +1,6 @@
 package com.uni.wine.models;
 
 public class Bottle {
-    private int id;
     private int volume;
     private int quantity;
 
@@ -9,18 +8,9 @@ public class Bottle {
 
     }
 
-    public Bottle(int id, int volume, int quantity) {
-        this.id = id;
+    public Bottle(int volume, int quantity) {
         this.volume = volume;
         this.quantity = quantity;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getVolume() {

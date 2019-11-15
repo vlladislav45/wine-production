@@ -58,6 +58,13 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
+    public int getId(String username) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE username = '" + username + "'";
+
+        return (int) jdbcConnector.executeQueryWithSingleResult(query).get("id_user");
+    }
+
+    @Override
     public void removeById(int idUser) {
         String query = "DELETE FROM " + TABLE_NAME + " WHERE id_user=?";
 
