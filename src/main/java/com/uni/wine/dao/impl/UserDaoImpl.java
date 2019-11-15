@@ -19,19 +19,17 @@ public class UserDaoImpl implements UserDAO {
         this.roleDao = roleDao;
     }
 
-    //(User u, UserRole role)
     @Override
-    public void changeRole(String username, int id_role) {
+    public void changeRole(String username, int idRole) {
 
         String query = "UPDATE " + TABLE_NAME +
-                                    " SET id_role = " + id_role +
-                                    " WHERE username = '" + username + "'";
+                                    " SET id_role=?" +
+                                    " WHERE username=?";
 
-        jdbcConnector.executeQueryWithSingleResult(query);
-
-        System.out.println("Finished");
+        jdbcConnector.executeQuery(query, idRole, username);
     }
 
+    //Add user to the database
     @Override
     public void add(User user) {
 
@@ -46,8 +44,8 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public User getById(int id) {
-        String query = "SELECT * FROM USERS WHERE id_user = '" + id + "'";
+    public User getById(int idUser) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE id_user=" + idUser;
         Map<String,Object> result = jdbcConnector.executeQueryWithSingleResult(query);
 
         int roleId = (int) result.get("id_role");
@@ -60,13 +58,19 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public void removeById(int id) {
+    public void removeById(int idUser) {
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE id_user=?";
 
+        jdbcConnector.executeQuery(query, idUser);
     }
 
     @Override
-    public void update(User element) {
+    public void update(String passUser, User user) {
+        String query = "UPDATE " + TABLE_NAME +
+                       " SET user_pass=? " +
+                       " WHERE username=?";
 
+        jdbcConnector.executeQuery(query, passUser, user.getLogin());
     }
 
     @Override

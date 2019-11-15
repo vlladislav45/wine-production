@@ -7,13 +7,13 @@ public interface UserDAO {
 
     void changeRole(String username, int id_role);
 
-    void add(User element);
+    void add(User user);
 
     User getById(int id);
 
     void removeById(int id);
 
-    void update(User element);
+    void update(String passUser, User user);
 
     int count();
 }

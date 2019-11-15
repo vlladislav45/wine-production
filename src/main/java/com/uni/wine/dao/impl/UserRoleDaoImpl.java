@@ -21,6 +21,7 @@ public class UserRoleDaoImpl {
         this.connector.executeQuery(query, element.getRoleName());
     }
 
+    //Добавяне на ролите от които имаме нужда
     public void addAll(UserRole... roles) {
         for (UserRole role : roles) {
             this.add(role);
@@ -37,7 +38,7 @@ public class UserRoleDaoImpl {
     }
 
     public UserRole getRoleById(int roleId) {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE id = " + roleId;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE id_role = " + roleId;
         Map<String, Object> resultMap = connector.executeQueryWithSingleResult(query);
 
         return UserRoleMapper.map(resultMap);
