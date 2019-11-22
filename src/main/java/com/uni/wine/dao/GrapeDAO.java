@@ -1,15 +1,17 @@
 package com.uni.wine.dao;
 
 import com.uni.wine.models.Grape;
+import com.uni.wine.models.User;
 
 public interface GrapeDAO {
     void add(Grape grape);
 
     Grape getById(int id);
 
-    Grape getSumById(int id);
+    //TODO test
+    float getSumById(int id);
 
-    int removeById(int id);
+    void removeById(int id);
 
-    int count();
+    void update(float quantity, int id);
 }

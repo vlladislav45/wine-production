@@ -76,7 +76,19 @@ public class MyClassTest {
             grape1.setUser(newUser);
             grape1.setVariety(new Variety("red"));
             grapeDao.add(grape1);
+
         }
+
+        if(varietyDao.count() == 2) {
+            int id = 8;
+            //grapeDao.update(600.20f, id);
+            Grape grape1 = new Grape();
+            System.out.println(grapeDao.getById(4).getUser().getLogin());
+            //grapeDao.getSumById(12);
+        }
+
+
+
 
     }
 

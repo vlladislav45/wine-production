@@ -4,6 +4,7 @@ import com.uni.wine.dao.GrapeDAO;
 import com.uni.wine.db.JDBCConnector;
 import com.uni.wine.mappers.GrapeMapper;
 import com.uni.wine.models.Grape;
+import com.uni.wine.models.User;
 
 import java.util.Map;
 
@@ -33,28 +34,38 @@ public class GrapeDaoImpl implements GrapeDAO {
 
     @Override
     public Grape getById(int id) {
-       // String query = "SELECT * FROM " + TABLE_NAME +
-             return null;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE id_grape = " + id;
+        Map<String,Object> result = connector.executeQueryWithSingleResult(query);
+
+        return GrapeMapper.map(result);
     }
 
     @Override
-    public Grape getSumById(int idVariety) {
-        String query = "SELECT SUM(grape_quantity) " +
-                       "FROM " + TABLE_NAME +
-                       "WHERE id_variety = " + idVariety;
+    public float getSumById(int idVariety) {
+        //int idVariety = varietyDao.getVarietyId(grape.getVariety().getVarietyName());
 
-       Map<String, Object> result = connector.executeQueryWithSingleResult(query);
+        String query = "SELECT SUM(grape_quantity)" +
+                       " FROM " + TABLE_NAME +
+                       " WHERE id_variety = " + idVariety;
 
-       return GrapeMapper.map(result);
+        return (float) connector.executeQueryWithSingleResult(query).get("grape_quantity");
     }
 
     @Override
-    public int removeById(int id) {
-        return 0;
+    public void removeById(int idGrape) {
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE id_grape=?";
+
+        connector.executeQuery(query, idGrape);
     }
 
     @Override
-    public int count() {
-        return 0;
+    public void update(float quantity, int id) {
+        String query = "UPDATE grapes" +
+                       " INNER JOIN users ON users.id_user = grapes.id_user" +
+                       " SET grape_quantity=?" +
+                       " WHERE users.id_user=?";
+
+        connector.executeQuery(query, quantity, id);
     }
+
 }
