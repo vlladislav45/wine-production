@@ -83,12 +83,11 @@ public class MyClassTest {
 
     }
 
-    @Test
     public void testWineDao() throws SQLException, ClassNotFoundException {
         JDBCConnector connector = new JDBCConnector("com.mysql.jdbc.Driver",
-                "jdbc:mysql://localhost:3306/wines_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
+                "jdbc:mysql://localhost:3306/wine_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
                 "root",
-                "1234");
+                "123123we");
 
         UserRoleDaoImpl userRoleDao = new UserRoleDaoImpl(connector);
         UserDaoImpl userDao = new UserDaoImpl(connector, userRoleDao);
@@ -121,8 +120,32 @@ public class MyClassTest {
         System.out.println("\n");
         System.out.println(wineDao.getById(1).getWineName());
         System.out.println("\n");
-        System.out.println(wineDao.getId("Bear paw"));
+        //System.out.println(wineDao.getId("Bear paw"));
     }
+    @Test
+    public void testBottles() throws SQLException, ClassNotFoundException {
+        JDBCConnector conn = new JDBCConnector("com.mysql.jdbc.Driver",
+                "jdbc:mysql://localhost:3306/wine_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
+                "root",
+                "123123we");
+        //CONST
+        final String TABLE_NAME = "bottles";
 
+        //Dao impl
+        BottleDaoImpl bottleDao = new BottleDaoImpl(conn);
 
+        Bottle bottlesToAdd = new Bottle();
+        bottlesToAdd.setQuantity(100);
+        bottlesToAdd.setVolume(750);
+
+        //bottleDao.add(bottlesToAdd);
+
+        Bottle bottlesToRemove = new Bottle();
+        bottlesToRemove.setQuantity(20);
+        bottlesToRemove.setVolume(750);
+
+        //bottleDao.removeBottle(bottlesToRemove);
+
+        System.out.println(bottleDao.getQuantity(750));
+    }
 }
