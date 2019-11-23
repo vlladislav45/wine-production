@@ -111,11 +111,17 @@ public class MyClassTest {
 
         //System.out.println(wineTypeDao.getWineTypeById(4).getTypeName()); //Get anything by id_type
 
-        Wine wine = new Wine();
-        wine.setWineName("Bear paw");
-        wine.setGrape(new Grape(4));
-        wine.setWineType(new WineType("red"));
-        wineDao.add(wine);
+//        Wine wine = new Wine();
+//        wine.setWineName("Bear paw");
+//        wine.setGrape(new Grape(4));
+//        wine.setWineType(new WineType("red"));
+//        wineDao.add(wine);
+
+        System.out.println(wineDao.count());
+        System.out.println("\n");
+        System.out.println(wineDao.getById(1).getWineName());
+        System.out.println("\n");
+        System.out.println(wineDao.getId("Bear paw"));
     }
 
 

@@ -42,7 +42,7 @@ public class WineDaoImpl implements WineDAO {
     @Override
     public int getId(String wineName) {
         String query = "SELECT * FROM " + TABLE_NAME +
-                       " WHERE wine_name = " + wineName;
+                       " WHERE wine_name = '" + wineName + "'";
 
         return (int) connector.executeQueryWithSingleResult(query).get("id_wine");
     }
