@@ -17,7 +17,15 @@ public class BottleDaoImpl implements BottleDAO {
 
     //Add user to the database
     @Override
-    public void add(Bottle bottle) {
+    public void add(Bottle bottle)
+    {
+        String query =
+                "INSERT INTO "+ TABLE_NAME +
+                        "(bottle_volume,bottle_quantity) VALUES(?,?)";
+        connector.executeQuery(query,bottle.getVolume(),bottle.getQuantity());
+    }
+    @Override
+    public void updateQuantity(Bottle bottle) {
 
         String query =
                 "UPDATE "+ TABLE_NAME +

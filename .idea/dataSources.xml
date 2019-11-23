@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="wines_db@localhost" uuid="daf2f630-42c5-49a9-bb15-8dd9e4292e04">
+    <data-source source="LOCAL" name="wines_db@localhost [2]" uuid="c073ebbb-a282-4537-a898-6f257452ea6d">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/wines_db?useSSL=false&amp;serverTimezone=UTC&amp;useLegacyDatetimeCode=false</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/wines_db?useSSL=false&amp;createDatabaseIfNotExist=true&amp;serverTimezone=UTC&amp;useLegacyDatetimeCode=false</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="CONVERT_TO_NULL" />

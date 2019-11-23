@@ -122,7 +122,7 @@ public class MyClassTest {
         System.out.println("\n");
         //System.out.println(wineDao.getId("Bear paw"));
     }
-    @Test
+
     public void testBottles() throws SQLException, ClassNotFoundException {
         JDBCConnector conn = new JDBCConnector("com.mysql.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/wine_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
@@ -138,14 +138,92 @@ public class MyClassTest {
         bottlesToAdd.setQuantity(100);
         bottlesToAdd.setVolume(750);
 
-        //bottleDao.add(bottlesToAdd);
+        //bottleDao.updateQuantity(bottlesToAdd);
 
         Bottle bottlesToRemove = new Bottle();
         bottlesToRemove.setQuantity(20);
         bottlesToRemove.setVolume(750);
 
         //bottleDao.removeBottle(bottlesToRemove);
+        Bottle newBottle=new Bottle();
+        newBottle.setQuantity(100);
+        newBottle.setVolume(420);
+        bottleDao.add(newBottle);
+        //System.out.println(bottleDao.getQuantity(750));
+        System.out.println(bottleDao.getQuantity(420));
+    }
+    @Test
+    public void testALL() throws SQLException, ClassNotFoundException {
+        JDBCConnector conn = new JDBCConnector("com.mysql.jdbc.Driver",
+                "jdbc:mysql://localhost:3306/wine_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
+                "root",
+                "123123we");
 
-        System.out.println(bottleDao.getQuantity(750));
+        BottleDaoImpl bottleDao = new BottleDaoImpl(conn);
+        WineTypeDaoImpl typeDao = new WineTypeDaoImpl(conn);
+        UserRoleDaoImpl roleDao = new UserRoleDaoImpl(conn);
+        VarietyDaoImpl varietyDao = new VarietyDaoImpl(conn);
+        UserDaoImpl userDao = new UserDaoImpl(conn,roleDao);
+        GrapeDaoImpl grapeDao = new GrapeDaoImpl(conn,varietyDao,userDao);
+        WineDaoImpl wineDao = new WineDaoImpl(conn,typeDao,grapeDao);
+        BottledWineDaoImpl bottledWineDao = new BottledWineDaoImpl(conn,bottleDao,userDao,wineDao,typeDao);
+
+        //Създай роля
+        UserRole role = new UserRole();
+        role.setRoleName("testrole");
+
+        //roleDao.add(role);
+
+        //Създай тип вино
+        WineType winetype = new WineType();
+        winetype.setTypeName("testtype");
+
+        //typeDao.add(winetype);
+
+        //Създай бутилка
+        Bottle bottle = new Bottle();
+        bottle.setVolume(333);
+        bottle.setQuantity(333);
+
+        //bottleDao.add(bottle);
+
+        //Създай сорт
+        Variety variety = new Variety();
+        variety.setVarietyName("testvariety");
+        variety.setIdVariety(7);
+
+        //varietyDao.add(variety);
+
+        //Създай потребител
+        User user = new User();
+        user.setLogin("testuser");
+        user.setPassword("123123");
+        user.setAccessLevel(role);
+
+        //userDao.add(user);
+
+        //Създай грозде
+        Grape grape = new Grape();
+        grape.setQuantity(100f);
+        grape.setUser(user);
+        grape.setVariety(new Variety("bqlo"));
+
+        //grapeDao.add(grape);
+
+        //Създай вино
+        Wine wine = new Wine();
+        wine.setWineName("testwine");
+        wine.setGrape(new Grape(1));
+        wine.setWineType(new WineType("rose"));
+
+        //wineDao.add(wine);
+
+        //Бутилирай вино
+        bottledWineDao.add(wine,user,bottle,67);
+
+        bottledWineDao.addByTypeandUser(wine,user,300);
+        bottledWineDao.removeByTypeandUser(wine,user,800);
+        System.out.println(bottledWineDao.getQuantityByTypeandUser(wine,user));
+        System.out.println(bottledWineDao.getQuantityByType(wine));
     }
 }
