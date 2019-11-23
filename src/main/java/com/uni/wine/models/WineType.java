@@ -4,6 +4,12 @@ public class WineType {
     private int idWine;
     private String typeName;
 
+    public WineType() { }
+
+    public WineType(String typeName) {
+        this.typeName = typeName;
+    }
+
     public int getIdWine() {
         return idWine;
     }

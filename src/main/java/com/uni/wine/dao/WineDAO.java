@@ -6,9 +6,9 @@ public interface WineDAO {
 
     void add(Wine wine);
 
-    void update();
+    void update(String oldWineName, String newWineName);
 
-    int getId(int idWine);
+    int getId(String wineName);
 
     Wine getById(int idWine);
 

@@ -3,8 +3,9 @@ package com.uni.wine.dao.impl;
 import com.uni.wine.dao.GrapeDAO;
 import com.uni.wine.db.JDBCConnector;
 import com.uni.wine.mappers.GrapeMapper;
+import com.uni.wine.mappers.UserMapper;
+import com.uni.wine.mappers.VarietyMapper;
 import com.uni.wine.models.Grape;
-import com.uni.wine.models.User;
 
 import java.util.Map;
 
@@ -41,14 +42,43 @@ public class GrapeDaoImpl implements GrapeDAO {
     }
 
     @Override
-    public float getSumById(int idVariety) {
-        //int idVariety = varietyDao.getVarietyId(grape.getVariety().getVarietyName());
+    public int getGrapeId(int idGrape) {
+        String query = "SELECT * FROM " + TABLE_NAME +
+                       " WHERE id_grape = " + idGrape;
 
+        return (int) connector.executeQueryWithSingleResult(query).get("id_grape");
+    }
+
+    @Override
+    public double getSumById(String varietyName) {
         String query = "SELECT SUM(grape_quantity)" +
                        " FROM " + TABLE_NAME +
-                       " WHERE id_variety = " + idVariety;
+                       " INNER JOIN varieties ON varieties.id_variety = grapes.id_variety " +
+                       " WHERE varieties.variety_name = '" + varietyName + "'";
 
-        return (float) connector.executeQueryWithSingleResult(query).get("grape_quantity");
+        Map<String, Object> result = connector.executeQueryWithSingleResult(query);
+        Object quantity = result.values().stream().findFirst().get();
+
+        return (Double) quantity;
+    }
+
+    @Override
+    public void getGrapeByUsername(String username){
+        //TODO
+        String query = "SELECT grape_quantity, users.username, varieties.variety_name " +
+                       "FROM " + TABLE_NAME +
+                       " INNER JOIN users ON users.id_user = grapes.id_user " +
+                       "INNER JOIN varieties ON varieties.id_variety = grapes.id_variety " +
+                       "WHERE users.username = '" + username + "'";
+
+        Map<String, Object> result = connector.executeQueryWithSingleResult(query);
+
+        Object quantity = result.values().stream().findFirst().get();
+        Object name = result.values().stream().findFirst().get();
+
+        System.out.println(GrapeMapper.map(result).getQuantity());
+        //System.out.println(UserMapper.map(result).getLogin());
+        //System.out.println(VarietyMapper.map(result).getVarietyName());
     }
 
     @Override

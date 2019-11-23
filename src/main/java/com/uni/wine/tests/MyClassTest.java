@@ -1,14 +1,8 @@
 package com.uni.wine.tests;
 
-import com.uni.wine.dao.impl.GrapeDaoImpl;
-import com.uni.wine.dao.impl.UserDaoImpl;
-import com.uni.wine.dao.impl.UserRoleDaoImpl;
-import com.uni.wine.dao.impl.VarietyDaoImpl;
+import com.uni.wine.dao.impl.*;
 import com.uni.wine.db.JDBCConnector;
-import com.uni.wine.models.Grape;
-import com.uni.wine.models.User;
-import com.uni.wine.models.UserRole;
-import com.uni.wine.models.Variety;
+import com.uni.wine.models.*;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -42,7 +36,6 @@ public class MyClassTest {
         //userDao.changeRole("admin", 3);
     }
 
-    @Test
     public void testGrape() throws SQLException, ClassNotFoundException {
         JDBCConnector conn = new JDBCConnector("com.mysql.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/wines_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
@@ -83,13 +76,46 @@ public class MyClassTest {
             int id = 8;
             //grapeDao.update(600.20f, id);
             Grape grape1 = new Grape();
-            System.out.println(grapeDao.getById(4).getUser().getLogin());
-            //grapeDao.getSumById(12);
+          // System.out.println(grapeDao.getById(4).getQuantity());
+            //System.out.println(grapeDao.getSumById("red"));
+           grapeDao.getGrapeByUsername("vladislav");
         }
 
+    }
 
+    @Test
+    public void testWineDao() throws SQLException, ClassNotFoundException {
+        JDBCConnector connector = new JDBCConnector("com.mysql.jdbc.Driver",
+                "jdbc:mysql://localhost:3306/wines_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
+                "root",
+                "1234");
 
+        UserRoleDaoImpl userRoleDao = new UserRoleDaoImpl(connector);
+        UserDaoImpl userDao = new UserDaoImpl(connector, userRoleDao);
 
+        VarietyDaoImpl varietyDao = new VarietyDaoImpl(connector);
+        GrapeDaoImpl grapeDao = new GrapeDaoImpl(connector, varietyDao, userDao);
+
+        WineTypeDaoImpl wineTypeDao = new WineTypeDaoImpl(connector);
+        WineDaoImpl wineDao = new WineDaoImpl(connector, wineTypeDao, grapeDao);
+
+        if(wineTypeDao.count() == 0) {
+            WineType white = new WineType("white");
+            WineType red = new WineType("red");
+            WineType rose = new WineType("rose");
+
+            wineTypeDao.addAll(white,red,rose);
+        }
+
+        //wineTypeDao.removeTypeByName("red"); // remove type by name
+
+        //System.out.println(wineTypeDao.getWineTypeById(4).getTypeName()); //Get anything by id_type
+
+        Wine wine = new Wine();
+        wine.setWineName("Bear paw");
+        wine.setGrape(new Grape(4));
+        wine.setWineType(new WineType("red"));
+        wineDao.add(wine);
     }
 
 

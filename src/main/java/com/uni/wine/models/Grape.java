@@ -8,6 +8,10 @@ public class Grape {
 
     public Grape() { }
 
+    public Grape(int idGrape) {
+        this.idGrape = idGrape;
+    }
+
     public int getIdGrape() {
         return idGrape;
     }
@@ -39,4 +43,5 @@ public class Grape {
     public void setUser(User user) {
         this.user = user;
     }
+
 }
