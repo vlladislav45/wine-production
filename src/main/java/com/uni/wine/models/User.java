@@ -1,15 +1,11 @@
 package com.uni.wine.models;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 public class User {
 
     private int id;
-    private String login;
-    private String password;
-    private LocalDateTime dateOfCreation;
-    UserRole accessLevel;
+    private String username;
+    private String user_pass;
+    UserRole user_role;
 
     public User() {
     }
@@ -23,34 +19,26 @@ public class User {
     }
 
     public String getLogin() {
-        return login;
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setLogin(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
-        return password;
+        return user_pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDateTime getDateOfCreation() {
-        return dateOfCreation;
-    }
-
-    public void setDateOfCreation(LocalDateTime dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
+    public void setPassword(String user_pass) {
+        this.user_pass = user_pass;
     }
 
     public UserRole getAccessLevel() {
-        return accessLevel;
+        return user_role;
     }
 
-    public void setAccessLevel(UserRole accessLevel) {
-        this.accessLevel = accessLevel;
+    public void setAccessLevel(UserRole user_role) {
+        this.user_role = user_role;
     }
 }

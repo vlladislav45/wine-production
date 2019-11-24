@@ -7,6 +7,10 @@ public class UserRole {
     public UserRole() {
     }
 
+    public UserRole(String role) {
+        this.roleName = role;
+    }
+
     public int getId() {
         return id;
     }
