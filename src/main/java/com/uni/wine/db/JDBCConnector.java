@@ -1,13 +1,15 @@
 package com.uni.wine.db;
 
 
+import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
 
 public class JDBCConnector {
-    //    private static final Logger LOGGER = Logger.getLogger(JDBCConnector.class);
+    private static final Logger LOGGER = Logger.getLogger(JDBCConnector.class);
     private Connection conn;
 
     public JDBCConnector(String jdbcDriver,
@@ -86,31 +88,31 @@ public class JDBCConnector {
 
 
             stmt.executeUpdate(createUserRolesQuery);
-            System.out.println("CREATED USER ROLES SUCCESSFULLY");
+            LOGGER.info("CREATED USER ROLES SUCCESSFULLY");
 
             stmt.executeUpdate(createWineTypesQuery);
-            System.out.println("CREATED WINE TYPES TABLE SUCCESSFULLY");
+            LOGGER.info("CREATED WINE TYPES TABLE SUCCESSFULLY");
 
             stmt.executeUpdate(createVarietyQuery);
-            System.out.println("CREATED VARIETY TABLE SUCCESSFULLY");
+            LOGGER.info("CREATED VARIETY TABLE SUCCESSFULLY");
 
             stmt.executeUpdate(createBottlesQuery);
-            System.out.println("CREATE TABLE BOTTLES SUCCESSFULLY");
+            LOGGER.info("CREATE TABLE BOTTLES SUCCESSFULLY");
 
             stmt.executeUpdate(createUsersQuery);
-            System.out.println("CREATED USERS SUCCESSFULLY");
+            LOGGER.info("CREATED USERS SUCCESSFULLY");
 
             stmt.executeUpdate(createGrapesQuery);
-            System.out.println("CREATE TABLE GRAPES SUCCESSFULLY");
+            LOGGER.info("CREATE TABLE GRAPES SUCCESSFULLY");
 
             stmt.executeUpdate(createWinesQuery);
-            System.out.println("CREATED WINES SUCCESSFULLY");
+            LOGGER.info("CREATED WINES SUCCESSFULLY");
 
             stmt.executeUpdate(createBottledWineQuery);
-            System.out.println("CREATE TABLE BOTTLED WINE SUCCESSFULLY");
+            LOGGER.info("CREATE TABLE BOTTLED WINE SUCCESSFULLY");
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("FAILED TO CREATE TABLES ");
+            LOGGER.error("FAILED TO CREATE TABLES ");
         }
 
     }
@@ -138,12 +140,12 @@ public class JDBCConnector {
             }
 
             pstmt.executeUpdate();
-//            LOGGER.info("Successfully executed query: " + pstmt);
+            LOGGER.info("Successfully executed query: " + pstmt);
         } catch (SQLException e) {
             e.printStackTrace();
-//            LOGGER.error("Failed to executeUpdate query: " + query +
-//                    "With values " +
-//                    Arrays.toString(wildcardParams), e);
+            LOGGER.error("Failed to executeUpdate query: " + query +
+                    "With values " +
+                    Arrays.toString(wildcardParams), e);
         }
     }
 
@@ -163,9 +165,9 @@ public class JDBCConnector {
              PreparedStatement ignored = conn.prepareStatement(query)) {
             ResultSet r = stmt.executeQuery(query);
             objectsList = parseResultSetToMap(r);
-//            LOGGER.info("Successfully fetched query: " + query);
+            LOGGER.info("Successfully fetched query: " + query);
         } catch (SQLException e) {
-//            LOGGER.error("Failed to execute query: " + query, e);
+            LOGGER.error("Failed to execute query: " + query, e);
         }
         return objectsList;
     }
@@ -185,7 +187,7 @@ public class JDBCConnector {
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
-//            LOGGER.error("Error executing query " + query, e);
+            LOGGER.error("Error executing query " + query, e);
         }
         return -1;
     }
@@ -214,7 +216,7 @@ public class JDBCConnector {
         } catch (IndexOutOfBoundsException iob) {
             //Thrown when #parseResultSetToMap returns empty list ( ResultSet was empty)
             System.out.println("No results found for query " + query);
-//            LOGGER.info("No results found for query: " + query);
+            LOGGER.info("No results found for query: " + query);
         }
 
         return resultColumnsMap;
