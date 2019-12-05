@@ -32,12 +32,7 @@ public class App extends Application {
                 "root",
                 "1234");
 
-        UserDaoImpl userDao = new UserDaoImpl(connector);
 
-        User user1 = new User();
-        user1.setLogin("login");
-        user1.setPassword("pwd");
-        userDao.add(user1);
         //connector.initTables();
         //launch(args);
     }

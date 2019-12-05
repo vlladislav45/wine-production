@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.uni.wine.controllers.HostOperator">
+  <children>
+    <HBox layoutX="124.0" layoutY="94.0" prefHeight="366.0" prefWidth="606.0">
+      <children>
+        <VBox prefHeight="382.0" prefWidth="171.0">
+          <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="171.0" text="Curently Stored Wine" textAlignment="CENTER" underline="false">
+              <font>
+                <Font size="14.0" fx:id="x1" />
+              </font>
+            </Label>
+            <Separator prefHeight="16.0" prefWidth="171.0" />
+            <ListView prefHeight="324.0" prefWidth="169.0" />
+          </children>
+        </VBox>
+        <VBox prefHeight="366.0" prefWidth="48.0">
+          <children>
+            <Separator orientation="VERTICAL" prefHeight="366.0" prefWidth="45.0" />
+          </children>
+        </VBox>
+        <VBox prefHeight="382.0" prefWidth="171.0">
+          <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="34.0" prefWidth="171.0" text="Curently Stored Grape" textAlignment="CENTER" underline="false" />
+            <Separator prefHeight="16.0" prefWidth="171.0" />
+            <ListView prefHeight="324.0" prefWidth="169.0" />
+          </children>
+        </VBox>
+        <VBox prefHeight="366.0" prefWidth="48.0">
+          <children>
+            <Separator orientation="VERTICAL" prefHeight="366.0" prefWidth="45.0" />
+          </children>
+        </VBox>
+        <VBox prefHeight="382.0" prefWidth="171.0">
+          <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="34.0" prefWidth="171.0" text="Free Bottles" textAlignment="CENTER" underline="false" />
+            <Separator prefHeight="16.0" prefWidth="171.0" />
+            <ListView prefHeight="324.0" prefWidth="169.0" />
+          </children>
+        </VBox>
+        <VBox prefHeight="366.0" prefWidth="48.0">
+          <children>
+            <Separator orientation="VERTICAL" prefHeight="366.0" prefWidth="45.0" />
+          </children>
+        </VBox>
+        <VBox prefHeight="382.0" prefWidth="171.0">
+          <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="27.0" prefWidth="152.0" text="Bottles To Add" textAlignment="CENTER" underline="false" />
+            <Separator prefHeight="22.0" prefWidth="152.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 750" textAlignment="CENTER" underline="false" />
+            <TextField prefHeight="27.000099999997474" prefWidth="139.0" />
+            <Separator prefHeight="16.0" prefWidth="152.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 350" textAlignment="CENTER" underline="false" />
+            <TextField prefHeight="32.0" prefWidth="139.0" />
+            <Separator prefHeight="16.0" prefWidth="152.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 200" textAlignment="CENTER" underline="false" />
+            <TextField prefHeight="32.0" prefWidth="139.0" />
+            <Separator prefHeight="16.0" prefWidth="152.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 187" textAlignment="CENTER" underline="false" />
+            <TextField prefHeight="32.0" prefWidth="139.0" />
+            <Separator prefHeight="16.0" prefWidth="152.0" />
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="139.0" text="ADD" />
+          </children>
+        </VBox>
+      </children>
+    </HBox>
+    <HBox layoutX="673.0" layoutY="486.0" prefHeight="100.0" prefWidth="113.0">
+      <children>
+        <VBox prefHeight="200.0" prefWidth="100.0">
+          <children>
+            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="100.0" text="Logout" />
+          </children>
+        </VBox>
+      </children>
+    </HBox>
+  </children>
+</AnchorPane>
