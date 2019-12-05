@@ -112,7 +112,7 @@ public class JDBCConnector {
             LOGGER.info("CREATE TABLE BOTTLED WINE SUCCESSFULLY");
         } catch (SQLException e) {
             e.printStackTrace();
-            LOGGER.error("FAILED TO CREATE TABLES ");
+            //LOGGER.error("FAILED TO CREATE TABLES ");
         }
 
     }
@@ -144,8 +144,8 @@ public class JDBCConnector {
         } catch (SQLException e) {
             e.printStackTrace();
             LOGGER.error("Failed to executeUpdate query: " + query +
-                    "With values " +
-                    Arrays.toString(wildcardParams), e);
+                   "With values " +
+                   Arrays.toString(wildcardParams), e);
         }
     }
 
@@ -209,14 +209,13 @@ public class JDBCConnector {
             //if the result returned no values, it will throw IndexOutOfBoundException
             //and will return empty Map
             resultColumnsMap = parseResultSetToMap(r).get(0);
-            System.out.println("Successfully fetched query: " + query);
+            LOGGER.info("Successfully fetched query: " + query);
             return resultColumnsMap;
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IndexOutOfBoundsException iob) {
             //Thrown when #parseResultSetToMap returns empty list ( ResultSet was empty)
-            System.out.println("No results found for query " + query);
-            LOGGER.info("No results found for query: " + query);
+            LOGGER.warn("No results found for query: " + query);
         }
 
         return resultColumnsMap;

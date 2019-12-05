@@ -57,7 +57,7 @@ public class GrapeDaoImpl implements GrapeDAO {
                        " WHERE varieties.variety_name = '" + varietyName + "'";
 
         Map<String, Object> result = connector.executeQueryWithSingleResult(query);
-        Object quantity = result.values().stream().findFirst().get();
+        Object quantity = result.values().stream().findFirst().orElse(null); // (getOrElse) orElse is equal to .get()
 
         return (Double) quantity;
     }
@@ -73,8 +73,8 @@ public class GrapeDaoImpl implements GrapeDAO {
 
         Map<String, Object> result = connector.executeQueryWithSingleResult(query);
 
-        Object quantity = result.values().stream().findFirst().get();
-        Object name = result.values().stream().findFirst().get();
+        Object quantity = result.values().stream().findFirst().orElse(null);
+        Object name = result.values().stream().findFirst().orElse(null);
 
         System.out.println(GrapeMapper.map(result).getQuantity());
         //System.out.println(UserMapper.map(result).getLogin());

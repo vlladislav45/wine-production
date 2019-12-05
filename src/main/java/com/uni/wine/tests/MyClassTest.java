@@ -9,6 +9,8 @@ import java.sql.SQLException;
 
 public class MyClassTest {
 
+
+    @Test
     public void testUserDao()  throws SQLException, ClassNotFoundException {
         JDBCConnector conn = new JDBCConnector("com.mysql.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/wines_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
@@ -85,9 +87,9 @@ public class MyClassTest {
 
     public void testWineDao() throws SQLException, ClassNotFoundException {
         JDBCConnector connector = new JDBCConnector("com.mysql.jdbc.Driver",
-                "jdbc:mysql://localhost:3306/wine_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
+                "jdbc:mysql://localhost:3306/wines_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
                 "root",
-                "123123we");
+                "1234");
 
         UserRoleDaoImpl userRoleDao = new UserRoleDaoImpl(connector);
         UserDaoImpl userDao = new UserDaoImpl(connector, userRoleDao);
@@ -125,9 +127,9 @@ public class MyClassTest {
 
     public void testBottles() throws SQLException, ClassNotFoundException {
         JDBCConnector conn = new JDBCConnector("com.mysql.jdbc.Driver",
-                "jdbc:mysql://localhost:3306/wine_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
+                "jdbc:mysql://localhost:3306/wines_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
                 "root",
-                "123123we");
+                "1234");
         //CONST
         final String TABLE_NAME = "bottles";
 
@@ -152,12 +154,12 @@ public class MyClassTest {
         //System.out.println(bottleDao.getQuantity(750));
         System.out.println(bottleDao.getQuantity(420));
     }
-    @Test
+
     public void testALL() throws SQLException, ClassNotFoundException {
         JDBCConnector conn = new JDBCConnector("com.mysql.jdbc.Driver",
-                "jdbc:mysql://localhost:3306/wine_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
+                "jdbc:mysql://localhost:3306/wines_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDatetimeCode=false",
                 "root",
-                "123123we");
+                "1234");
 
         BottleDaoImpl bottleDao = new BottleDaoImpl(conn);
         WineTypeDaoImpl typeDao = new WineTypeDaoImpl(conn);
@@ -166,7 +168,7 @@ public class MyClassTest {
         UserDaoImpl userDao = new UserDaoImpl(conn,roleDao);
         GrapeDaoImpl grapeDao = new GrapeDaoImpl(conn,varietyDao,userDao);
         WineDaoImpl wineDao = new WineDaoImpl(conn,typeDao,grapeDao);
-        BottledWineDaoImpl bottledWineDao = new BottledWineDaoImpl(conn,bottleDao,userDao,wineDao,typeDao);
+        //BottledWineDaoImpl bottledWineDao = new BottledWineDaoImpl(conn,bottleDao,userDao,wineDao,typeDao);
 
         //Създай роля
         UserRole role = new UserRole();
@@ -219,11 +221,11 @@ public class MyClassTest {
         //wineDao.add(wine);
 
         //Бутилирай вино
-        bottledWineDao.add(wine,user,bottle,67);
+        //bottledWineDao.add(wine,user,bottle,67);
 
-        bottledWineDao.addByTypeandUser(wine,user,300);
-        bottledWineDao.removeByTypeandUser(wine,user,800);
-        System.out.println(bottledWineDao.getQuantityByTypeandUser(wine,user));
-        System.out.println(bottledWineDao.getQuantityByType(wine));
+        //bottledWineDao.addByTypeandUser(wine,user,300);
+        //bottledWineDao.removeByTypeandUser(wine,user,800);
+        //System.out.println(bottledWineDao.getQuantityByTypeandUser(wine,user));
+        //System.out.println(bottledWineDao.getQuantityByType(wine));
     }
 }

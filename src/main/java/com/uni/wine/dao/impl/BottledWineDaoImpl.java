@@ -1,5 +1,7 @@
 package com.uni.wine.dao.impl;
 
+import com.uni.wine.dao.UserDAO;
+import com.uni.wine.dao.WineDAO;
 import com.uni.wine.db.JDBCConnector;
 import com.uni.wine.dao.BottledWineDAO;
 import com.uni.wine.models.Bottle;
@@ -12,18 +14,14 @@ import java.util.Map;
 public class BottledWineDaoImpl implements BottledWineDAO {
     private static final String TABLE_NAME = "bottled_wine";
     private final JDBCConnector connector;
-    private final BottleDaoImpl bottleDao;
-    private final UserDaoImpl userDao;
-    private final WineDaoImpl wineDao;
-    private final WineTypeDaoImpl typeDao;
+    private final UserDAO userDao;
+    private final WineDAO wineDao;
 
-    public BottledWineDaoImpl(JDBCConnector connector, BottleDaoImpl bottle, UserDaoImpl user, WineDaoImpl wine, WineTypeDaoImpl type)
+    public BottledWineDaoImpl(JDBCConnector connector, UserDAO user, WineDAO wine)
     {
         this.connector = connector;
-        this.bottleDao = bottle;
         this.userDao = user;
         this.wineDao = wine;
-        this.typeDao = type;
     }
     @Override
     public void add(Wine wine, User user, Bottle bottle, int quantity)
@@ -46,9 +44,9 @@ public class BottledWineDaoImpl implements BottledWineDAO {
                     " WHERE id_wine = " + wineDao.getId(wine.getWineName());
 
         Map<String,Object> result = connector.executeQueryWithSingleResult(query);
-        String quantity = result.values().stream().findFirst().get().toString();
-        int res=Integer.parseInt(quantity);
-        return res;
+        String quantity = result.values().stream().findFirst().orElse(null).toString();
+
+        return Integer.parseInt(quantity);
     }
     @Override
     public int getQuantityByTypeandUser(Wine wine, User user)
@@ -59,10 +57,11 @@ public class BottledWineDaoImpl implements BottledWineDAO {
                         " and id_user = "+ userDao.getId(user.getLogin());
 
         Map<String,Object> result = connector.executeQueryWithSingleResult(query);
-        String quantity = result.values().stream().findFirst().get().toString();
-        int res=Integer.parseInt(quantity);
-        return res;
+        String quantity = result.values().stream().findFirst().orElse(null).toString();
+
+        return Integer.parseInt(quantity);
     }
+
     @Override
     public void addByTypeandUser(Wine wine,User user,int quantity)
     {

@@ -32,9 +32,9 @@ public class VarietyDaoImpl {
         return (int) connector.executeQueryWithSingleResult(query).get("id_variety");
     }
 
-    public Variety getVarietyById(int idVariety) {
+    public Variety getVarietyById(String variety) {
         String query = "SELECT * FROM " + TABLE_NAME +
-                       "WHERE variety_name = " + idVariety;
+                       "WHERE variety_name = " + variety;
 
         Map<String, Object> resultMap = connector.executeQueryWithSingleResult(query);
 

@@ -1,7 +1,6 @@
 package com.uni.wine.dao;
 
 import com.uni.wine.models.User;
-import com.uni.wine.models.UserRole;
 
 public interface UserDAO {
 
@@ -10,6 +9,8 @@ public interface UserDAO {
     void add(User user);
 
     User getById(int id);
+
+    User getByParams(String username, String password);
 
     int getId(String name);
 

@@ -1,5 +1,6 @@
 package com.uni.wine.dao.impl;
 
+import com.uni.wine.dao.GrapeDAO;
 import com.uni.wine.dao.WineDAO;
 import com.uni.wine.db.JDBCConnector;
 import com.uni.wine.mappers.WineMapper;
@@ -11,9 +12,9 @@ public class WineDaoImpl implements WineDAO {
     private static final String TABLE_NAME = "wines";
     private final JDBCConnector connector;
     private final WineTypeDaoImpl wineTypeDao;
-    private final GrapeDaoImpl grapeDao;
+    private final GrapeDAO grapeDao;
 
-    public WineDaoImpl(JDBCConnector connector, WineTypeDaoImpl wineTypeDao, GrapeDaoImpl grapeDao) {
+    public WineDaoImpl(JDBCConnector connector, WineTypeDaoImpl wineTypeDao, GrapeDAO grapeDao) {
         this.connector = connector;
         this.wineTypeDao = wineTypeDao;
         this.grapeDao = grapeDao;

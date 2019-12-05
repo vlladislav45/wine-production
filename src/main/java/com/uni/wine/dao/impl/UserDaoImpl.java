@@ -58,6 +58,25 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
+    public User getByParams(String username, String password) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE username='" + username + "'" +
+                       " AND user_pass='" + password + "'";
+
+        Map<String,Object> result = jdbcConnector.executeQueryWithSingleResult(query);
+
+        if(result.isEmpty()) {
+            return null;
+        }
+        User user = UserMapper.map(result);
+        int roleId = Integer.parseInt(String.valueOf(result.get("id_role")));
+        UserRole role = roleDao.getRoleById(roleId);
+        user.setAccessLevel(role);
+
+        return user;
+
+    }
+
+    @Override
     public int getId(String username) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE username = '" + username + "'";
 
