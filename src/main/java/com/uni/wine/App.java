@@ -23,6 +23,7 @@ public class App extends Application {
 
         stage.setScene(scene);
         stage.show();
+        ///aaaa
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
