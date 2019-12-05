@@ -19,6 +19,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 
@@ -31,6 +33,7 @@ public class App extends Application {
         Scene scene = new Scene(root);
         ((MainController)loader.getController()).setServiceWrapper(serviceWrapper);
 
+        stage.setResizable(false);
         stage.setTitle("Wine");
         stage.getIcons().add(new Image("images/wine_ico.png"));
 
@@ -43,6 +46,7 @@ public class App extends Application {
         System.out.println("======Started======");
 
         initServicesWrapper();
+        Logger.getRootLogger().setLevel(Level.OFF);
         //connector.initTables();
         launch(args);
     }

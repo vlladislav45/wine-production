@@ -1,152 +1,106 @@
 package com.uni.wine.controllers;
 
-import javafx.animation.TranslateTransition;
+import com.uni.wine.services.UserService;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
+
 public class OperatorController {
+
     @FXML
-    public StackPane container;
+    private Button warehouseBtn;
+    @FXML
+    private Button bottleWineBtn;
+    @FXML
+    private Button addGrapeBtn;
+    @FXML
+    private Button logoutBtn;
 
-    private HBox productsWrapper;
-    private VBox productsInnerLayout;
-    private VBox verticalLayout;
-    private ListView listView;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private AnchorPane initialView;
 
-    private Text attitudeGrapeWineText;
-    private TextField attitudeGrapeWine;
-    private Text varietyText;
-    private ComboBox varietyCombobox;
-    private Text grapeText;
-    private TextField grapeInput;
-    private Text wineText;
-    private TextField wineInput;
-    private Button convertGrape;
-    private Button convertWine;
-
-    private Button menuToggle;
-    private VBox menu;
-
+    @FXML
+    private HBox warehouse;
+    @FXML
+    private HBox bottleWine;
+    @FXML
+    private HBox addGrapeToWh;
 
 
-    public void initUI() {
-        initLayout();
+    @FXML
+    void Logout(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("scenes/MainScene.fxml"));
+        Parent newParent;
 
-        initTopUI();
+        boolean isTrue = false;
+        try {
+            //TODO when the main controller is called in second time(error)
+            newParent = loader.load();
+            anchorPane.getChildren().add(newParent);
 
-        initMenu();
+            newParent.setScaleX(0);
+            newParent.setScaleY(0);
+            anchorPane.getChildren().remove(initialView);
+            final Timeline timeline = new Timeline();
+            final KeyValue kv3 = new KeyValue(newParent.scaleXProperty(), 1, Interpolator.LINEAR);
+            final KeyValue kv4 = new KeyValue(newParent.scaleYProperty(), 1, Interpolator.LINEAR);
+            final KeyFrame kf = new KeyFrame(Duration.millis(1500), kv3, kv4);
+            timeline.getKeyFrames().add(kf);
+            timeline.play();
+
+            MainController nextController = loader.getController();
+            isTrue = true;
+
+        }catch (IOException e) {
+            System.out.println("Error");
+
+        }
+        if(isTrue) {
+            System.out.println("Success");
+        }
     }
 
-    private void initMenu() {
-        menu = new VBox(10);
-
-        menu.minHeightProperty().bind(container.heightProperty());
-        menu.setPrefWidth(200);
-        menu.getChildren().addAll(new TextField("Veto"));
-        menuToggle = new Button("<");
-        menuToggle.setPrefWidth(50);
-
-            TranslateTransition openNav=new TranslateTransition(new Duration(350), menu);
-            openNav.setToX(0);
-            TranslateTransition closeNav=new TranslateTransition(new Duration(350), menu);
-            menuToggle.setOnMouseClicked((MouseEvent evt)->{
-                  if(container.getTranslateX() != 0){
-                    openNav.setToX(+(container.getWidth()));
-                    openNav.play();
-                }else{
-                    //closeNav.setToX(-(container.getWidth()));
-                      closeNav.setToX(-250);
-                    closeNav.play();
-                }
-            });
-
-
-
-        productsWrapper.getChildren().addAll(menuToggle, menu);
+    @FXML
+    void ShowAG(ActionEvent event) {
+        //Add Grape to the warehouse scene
+        warehouse.setVisible(false);
+        bottleWine.setVisible(false);
+        addGrapeToWh.setVisible(true);
     }
 
-    private void initTopUI() {
-        attitudeGrapeWineText = new Text("1:n");
-        attitudeGrapeWine = new TextField();
-        varietyText = new Text("Variety:");
-        varietyCombobox = new ComboBox();
-        grapeText = new Text("Quantity:");
-        grapeInput = new TextField();
-        wineText = new Text("Quantity:");
-        wineInput = new TextField();
-        convertGrape = new Button("Convert Grape");
-        convertWine = new Button("Bottle Up");
-
-        attitudeGrapeWine.setPromptText("1:?");
-        attitudeGrapeWine.setOnKeyPressed((KeyEvent e) -> {
-            if((e.getCode().isDigitKey() && attitudeGrapeWine.getText().length() < 1) ||
-               e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.TAB) {
-
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Only digits");
-                alert.show();
-            }
-        });
-
-        varietyCombobox.setPrefWidth(130);
-        varietyCombobox.getItems().addAll(
-                "black",
-                "white"
-        );
-
-        grapeInput.setOnKeyPressed((KeyEvent e) -> {
-            if(e.getCode().isDigitKey() || e.getCode() == KeyCode.BACK_SPACE ||
-               e.getCode() == KeyCode.PERIOD || e.getCode() == KeyCode.TAB) {
-
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "The quantity of the grapes can be only from digits");
-                alert.show();
-            }
-        });
-
-        wineInput.setOnKeyPressed((KeyEvent e) -> {
-            if(e.getCode().isDigitKey() || e.getCode() == KeyCode.BACK_SPACE ||
-                    e.getCode() == KeyCode.PERIOD || e.getCode() == KeyCode.TAB) {
-
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "The quantity of the wine can be only from digits");
-                alert.show();
-            }
-        });
-
-        convertGrape.disableProperty().bind(grapeInput.textProperty().isEmpty()
-                                            .or(varietyCombobox.valueProperty().isNull())
-                                            .or(attitudeGrapeWine.textProperty().isEmpty()));
-        convertWine.disableProperty().bind(wineInput.textProperty().isEmpty());
-
-        HBox grapeTextRow = new HBox(125);
-        grapeTextRow.getChildren().addAll(attitudeGrapeWineText, varietyText, grapeText);
-        HBox grapeRow = new HBox(5);
-        grapeRow.getChildren().addAll(attitudeGrapeWine, varietyCombobox, grapeInput, convertGrape);
-        HBox wineRow = new HBox(5);
-        wineRow.getChildren().addAll(wineText, wineInput, convertWine);
-
-        productsInnerLayout.getChildren().addAll(grapeTextRow, grapeRow, wineRow);
-
-        container.getChildren().add(verticalLayout);
+    @FXML
+    void ShowBW(ActionEvent event) {
+        //Bottle Wine Scene
+        warehouse.setVisible(false);
+        bottleWine.setVisible(true);
+        addGrapeToWh.setVisible(false);
     }
 
-    private void initLayout() {
-        verticalLayout = new VBox(25);
-        productsInnerLayout = new VBox(15);
-        productsWrapper = new HBox(10);
- //       listView = new ListView();
-        productsWrapper.getChildren().add(productsInnerLayout);
-        verticalLayout.getChildren().add(productsWrapper);
-   //     verticalLayout.getChildren().add(listView);
+    @FXML
+    void ShowWH(ActionEvent event) {
+        warehouse.setVisible(true);
+        bottleWine.setVisible(false);
+        addGrapeToWh.setVisible(false);
+    }
+
+    @FXML
+    void initialize() {
+
+
     }
 }

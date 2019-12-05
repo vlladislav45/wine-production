@@ -1,11 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane fx:id="container" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.uni.wine.controllers.OperatorController"
-            prefHeight="400.0" prefWidth="600.0">
-
-
-</StackPane>
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
+            xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="com.uni.wine.controllers.OperatorController">
+  <AnchorPane fx:id="initialView">
+    <children>
+      <HBox layoutX="150.0" layoutY="14.0" prefHeight="47.0" prefWidth="516.0">
+        <children>
+          <Button fx:id="warehouseBtn" mnemonicParsing="false" onAction="#ShowWH" prefHeight="42.0" prefWidth="171.0" text="Warehouse" />
+          <Button fx:id="bottleWineBtn" mnemonicParsing="false" onAction="#ShowBW" prefHeight="42.0" prefWidth="171.0" text="Bottle Wine" />
+          <Button fx:id="addGrapeBtn" mnemonicParsing="false" onAction="#ShowAG" prefHeight="42.0" prefWidth="171.0" text="Add Grape" />
+        </children>
+      </HBox>
+      <Button fx:id="logoutBtn" layoutX="662.0" layoutY="552.0" mnemonicParsing="false" onAction="#Logout" prefHeight="34.0" prefWidth="124.0" text="Logout" />
+      <HBox fx:id="warehouse" layoutX="150.0" layoutY="109.0" prefHeight="382.0" prefWidth="516.0" visible="true">
+        <children>
+          <VBox prefHeight="382.0" prefWidth="171.0">
+            <children>
+              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="171.0" text="Curently stored wine" textAlignment="CENTER" underline="false">
+                <font>
+                  <Font size="14.0" fx:id="x1" />
+                </font>
+              </Label>
+              <Separator prefHeight="16.0" prefWidth="171.0" />
+              <ListView prefHeight="332.0" prefWidth="171.0" />
+            </children>
+          </VBox>
+          <VBox prefHeight="382.0" prefWidth="171.0">
+            <children>
+              <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="34.0" prefWidth="171.0" text="Curently stored grape" textAlignment="CENTER" underline="false" />
+              <Separator prefHeight="16.0" prefWidth="171.0" />
+              <ListView prefHeight="332.0" prefWidth="171.0" />
+            </children>
+          </VBox>
+          <VBox prefHeight="382.0" prefWidth="171.0">
+            <children>
+              <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="34.0" prefWidth="171.0" text="Free Bottles" textAlignment="CENTER" underline="false" />
+              <Separator prefHeight="16.0" prefWidth="171.0" />
+              <ListView prefHeight="332.0" prefWidth="171.0" />
+            </children>
+          </VBox>
+        </children>
+      </HBox>
+      <HBox fx:id="bottleWine" layoutX="150.0" layoutY="119.0" prefHeight="382.0" prefWidth="516.0" visible="false">
+        <children>
+          <VBox prefHeight="382.0" prefWidth="250.0">
+            <children>
+              <Label alignment="CENTER" prefHeight="22.0" prefWidth="250.0" text="Choose Rate">
+                <font>
+                  <Font size="16.0" fx:id="x2" />
+                </font>
+              </Label>
+              <TextField alignment="CENTER" prefHeight="42.0" prefWidth="516.0" promptText="1:n" />
+              <Separator prefHeight="17.0" prefWidth="171.0" />
+              <Label alignment="CENTER" font="$x2" prefHeight="22.0" prefWidth="250.0" text="Choose Quantity" />
+              <TextField alignment="CENTER" prefHeight="42.0" prefWidth="516.0" />
+              <Separator prefHeight="17.0" prefWidth="171.0" />
+              <Label alignment="CENTER" font="$x2" prefHeight="22.0" prefWidth="250.0" text="Choose Type" />
+              <ComboBox prefHeight="42.0" prefWidth="516.0">
+                <items>
+                  <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Item 1" />
+                    <String fx:value="Item 2" />
+                    <String fx:value="Item 3" />
+                  </FXCollections>
+                </items>
+              </ComboBox>
+              <Separator prefHeight="17.0" prefWidth="171.0" />
+              <Button font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Convert Grape" />
+            </children>
+          </VBox>
+          <VBox prefHeight="382.0" prefWidth="26.0">
+            <children>
+              <Separator orientation="VERTICAL" prefHeight="382.0" prefWidth="19.0" />
+            </children>
+          </VBox>
+          <VBox prefHeight="382.0" prefWidth="262.0">
+            <children>
+              <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="22.0" prefWidth="255.0" text="Total wine" />
+              <TextField alignment="CENTER" prefWidth="200.0" promptText="Wine" text="" />
+              <Separator prefHeight="17.0" prefWidth="171.0" />
+              <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="22.0" prefWidth="255.0" text="Bottles Needed" />
+              <ListView prefHeight="200.0" prefWidth="200.0" />
+              <Separator prefHeight="17.0" prefWidth="171.0" />
+              <Button font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="262.0" text="Bottle Up" />
+            </children>
+          </VBox>
+        </children>
+      </HBox>
+      <HBox fx:id="addGrapeToWh" layoutX="150.0" layoutY="129.0" prefHeight="382.0" prefWidth="512.0" visible="false">
+        <children>
+          <VBox prefHeight="382.0" prefWidth="171.0" />
+          <VBox prefHeight="382.0" prefWidth="171.00009999999747" visible="true">
+            <children>
+              <Label alignment="CENTER" font="$x2" prefHeight="34.0" prefWidth="171.0" text="Choose Quantity" />
+              <TextField prefHeight="35.0" prefWidth="171.0" promptText="Quantity" />
+              <Separator prefHeight="14.0" prefWidth="171.0" />
+              <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="34.000099999997474" prefWidth="171.0" text="Choose Variety" />
+              <ComboBox prefHeight="34.0" prefWidth="170.0">
+                <items>
+                  <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Item 1" />
+                    <String fx:value="Item 2" />
+                    <String fx:value="Item 3" />
+                  </FXCollections>
+                </items>
+              </ComboBox>
+              <Separator prefHeight="19.0" prefWidth="171.0" />
+              <Button font="$x2" mnemonicParsing="false" prefHeight="42.0" prefWidth="170.0" text="Add Grape" />
+            </children>
+          </VBox>
+          <VBox prefHeight="382.0" prefWidth="171.0" />
+        </children>
+      </HBox>
+    </children>
+  </AnchorPane>
+</AnchorPane>

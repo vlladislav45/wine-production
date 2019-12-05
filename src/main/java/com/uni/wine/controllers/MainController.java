@@ -39,8 +39,7 @@ public class MainController {
 
     private ServiceWrapper serviceWrapper;
 
-    private static final Logger LOGGER = Logger.getLogger(JDBCConnector.class);
-
+    private static final Logger LOGGER = Logger.getLogger(MainController.class);
 
     @FXML
     void onCloseAction(ActionEvent event) {
@@ -77,7 +76,6 @@ public class MainController {
             Alert alert = new Alert(Alert.AlertType.WARNING, "The username or password was incorrect. Please try again");
             alert.show();
         } else {
-
             boolean isSuccessful =
                     this.serviceWrapper
                             .getUserService()
@@ -125,13 +123,14 @@ public class MainController {
                 //nextController.initUI();
             }else {
                 OperatorController nextController = loader.getController();
-                nextController.initUI();
+                //nextController.initUI();
             }
 
 //            nextController.setMainController(this);
 
         } catch (IOException ex) {
             LOGGER.error("Could not load next scene " + ex);
+
         }
     }
 
