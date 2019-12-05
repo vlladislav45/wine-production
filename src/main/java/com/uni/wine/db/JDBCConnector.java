@@ -18,7 +18,7 @@ public class JDBCConnector {
                          String password) throws SQLException, ClassNotFoundException {
 
         Class.forName(jdbcDriver);
-
+        // Debug i vij tuk i`liza li pravilni parola i user
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", password);

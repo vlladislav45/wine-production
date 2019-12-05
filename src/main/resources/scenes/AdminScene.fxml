@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<StackPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.uni.wine.controllers.AdminController"
+            prefHeight="800.0" prefWidth="600.0">
+
+    <children>
+        <Text layoutX="404.0" layoutY="57.0" scaleX="11.118934075707017" scaleY="2.06436612824278" strokeType="OUTSIDE" strokeWidth="0.0" text="ADMIN" />
+
+    </children>
+
+</StackPane>
