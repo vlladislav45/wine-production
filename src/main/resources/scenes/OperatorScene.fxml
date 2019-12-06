@@ -60,23 +60,22 @@
                   <Font size="16.0" fx:id="x2" />
                 </font>
               </Label>
-              <TextField alignment="CENTER" prefHeight="42.0" prefWidth="516.0" promptText="1:n" />
+              <TextField fx:id="attitudeGrapeWine" alignment="CENTER" prefHeight="42.0" prefWidth="516.0" promptText="1:n" />
               <Separator prefHeight="17.0" prefWidth="171.0" />
               <Label alignment="CENTER" font="$x2" prefHeight="22.0" prefWidth="250.0" text="Choose Quantity" />
-              <TextField alignment="CENTER" prefHeight="42.0" prefWidth="516.0" />
+              <TextField fx:id="grapeInput" alignment="CENTER" prefHeight="42.0" prefWidth="516.0" />
               <Separator prefHeight="17.0" prefWidth="171.0" />
               <Label alignment="CENTER" font="$x2" prefHeight="22.0" prefWidth="250.0" text="Choose Type" />
-              <ComboBox prefHeight="42.0" prefWidth="516.0">
+              <ComboBox fx:id="varietyCombobox" prefHeight="42.0" prefWidth="516.0">
                 <items>
                   <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Item 1" />
-                    <String fx:value="Item 2" />
-                    <String fx:value="Item 3" />
+                    <String fx:value="Black" />
+                    <String fx:value="White" />
                   </FXCollections>
                 </items>
               </ComboBox>
               <Separator prefHeight="17.0" prefWidth="171.0" />
-              <Button font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Convert Grape" />
+              <Button fx:id="convertGrape" font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Convert Grape" />
             </children>
           </VBox>
           <VBox prefHeight="382.0" prefWidth="26.0">
@@ -87,12 +86,12 @@
           <VBox prefHeight="382.0" prefWidth="262.0">
             <children>
               <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="22.0" prefWidth="255.0" text="Total wine" />
-              <TextField alignment="CENTER" prefWidth="200.0" promptText="Wine" text="" />
+              <TextField fx:id="wineInput" alignment="CENTER" prefWidth="200.0" promptText="Wine" text="" />
               <Separator prefHeight="17.0" prefWidth="171.0" />
               <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="22.0" prefWidth="255.0" text="Bottles Needed" />
               <ListView prefHeight="200.0" prefWidth="200.0" />
               <Separator prefHeight="17.0" prefWidth="171.0" />
-              <Button font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="262.0" text="Bottle Up" />
+              <Button fx:id="convertWine" font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="262.0" text="Bottle Up" />
             </children>
           </VBox>
         </children>

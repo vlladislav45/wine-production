@@ -10,7 +10,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -21,13 +26,17 @@ import java.io.IOException;
 public class OperatorController {
 
     @FXML
-    private Button warehouseBtn;
+    private TextField attitudeGrapeWine;
     @FXML
-    private Button bottleWineBtn;
+    private TextField grapeInput;
     @FXML
-    private Button addGrapeBtn;
+    private ComboBox varietyCombobox;
     @FXML
-    private Button logoutBtn;
+    private Button convertGrape;
+    @FXML
+    private TextField wineInput;
+    @FXML
+    private Button convertWine;
 
     @FXML
     private AnchorPane anchorPane;
@@ -89,6 +98,40 @@ public class OperatorController {
         warehouse.setVisible(false);
         bottleWine.setVisible(true);
         addGrapeToWh.setVisible(false);
+
+        attitudeGrapeWine.setOnKeyPressed((KeyEvent e) -> {
+            if((e.getCode().isDigitKey() && attitudeGrapeWine.getText().length() < 1) ||
+                    e.getCode() == KeyCode.BACK_SPACE || e.getCode() == KeyCode.TAB) { }
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Only digits");
+                alert.show();
+            }
+        });
+
+
+        grapeInput.setOnKeyPressed((KeyEvent e) -> {
+            if(e.getCode().isDigitKey() || e.getCode() == KeyCode.BACK_SPACE ||
+                    e.getCode() == KeyCode.PERIOD || e.getCode() == KeyCode.TAB) { }
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "The quantity of the grapes can be only from digits");
+                alert.show();
+            }
+        });
+
+        wineInput.setOnKeyPressed((KeyEvent e) -> {
+            if(e.getCode().isDigitKey() || e.getCode() == KeyCode.BACK_SPACE ||
+                    e.getCode() == KeyCode.PERIOD || e.getCode() == KeyCode.TAB) {
+
+            }else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "The quantity of the wine can be only from digits");
+                alert.show();
+            }
+        });
+
+        convertGrape.disableProperty().bind(grapeInput.textProperty().isEmpty()
+                .or(varietyCombobox.valueProperty().isNull())
+                .or(attitudeGrapeWine.textProperty().isEmpty()));
+        convertWine.disableProperty().bind(wineInput.textProperty().isEmpty());
     }
 
     @FXML

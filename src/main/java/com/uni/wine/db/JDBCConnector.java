@@ -112,7 +112,7 @@ public class JDBCConnector {
             LOGGER.info("CREATE TABLE BOTTLED WINE SUCCESSFULLY");
         } catch (SQLException e) {
             e.printStackTrace();
-            //LOGGER.error("FAILED TO CREATE TABLES ");
+            LOGGER.error("FAILED TO CREATE TABLES ");
         }
 
     }
