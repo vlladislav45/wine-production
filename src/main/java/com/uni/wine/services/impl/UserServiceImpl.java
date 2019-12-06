@@ -1,15 +1,16 @@
 package com.uni.wine.services.impl;
 
+import com.uni.wine.dao.UserDAO;
 import com.uni.wine.dao.impl.UserDaoImpl;
 import com.uni.wine.dao.impl.UserRoleDaoImpl;
 import com.uni.wine.models.User;
 import com.uni.wine.services.UserService;
 
 public class UserServiceImpl implements UserService {
-    private UserDaoImpl userDao;
+    private UserDAO userDao;
     private User loggedUser;
 
-    public UserServiceImpl(UserDaoImpl userDao, UserRoleDaoImpl userRoleDao) {
+    public UserServiceImpl(UserDAO userDao, UserRoleDaoImpl userRoleDao) {
         this.userDao = userDao;
     }
 

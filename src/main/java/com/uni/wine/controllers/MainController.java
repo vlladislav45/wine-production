@@ -36,7 +36,6 @@ public class MainController {
     @FXML
     private Button loginBtn;
 
-
     private ServiceWrapper serviceWrapper;
 
     private static final Logger LOGGER = Logger.getLogger(MainController.class);
