@@ -1,9 +1,8 @@
 package com.uni.wine.dao.impl;
 
-import com.uni.wine.dao.BaseDAO;
-import com.uni.wine.db.JDBCConnector;
+import com.uni.wine.databaselayer.JDBCConnector;
 import com.uni.wine.mappers.UserRoleMapper;
-import com.uni.wine.models.UserRole;
+import com.uni.wine.businesslayer.entities.UserRole;
 
 import java.util.Map;
 

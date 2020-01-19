@@ -7,7 +7,12 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.uni.wine.controllers.HostOperator">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="com.uni.wine.controllers.HostController">
+  <AnchorPane fx:id="initialView">
   <children>
     <HBox layoutX="124.0" layoutY="94.0" prefHeight="366.0" prefWidth="606.0">
       <children>
@@ -19,7 +24,7 @@
               </font>
             </Label>
             <Separator prefHeight="16.0" prefWidth="171.0" />
-            <ListView prefHeight="324.0" prefWidth="169.0" />
+            <ListView fx:id="curentStoredBottledWines" prefHeight="324.0" prefWidth="169.0" />
           </children>
         </VBox>
         <VBox prefHeight="366.0" prefWidth="48.0">
@@ -31,7 +36,7 @@
           <children>
             <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="34.0" prefWidth="171.0" text="Curently Stored Grape" textAlignment="CENTER" underline="false" />
             <Separator prefHeight="16.0" prefWidth="171.0" />
-            <ListView prefHeight="324.0" prefWidth="169.0" />
+            <ListView fx:id="curentStoredGrapes" prefHeight="324.0" prefWidth="169.0" />
           </children>
         </VBox>
         <VBox prefHeight="366.0" prefWidth="48.0">
@@ -43,7 +48,7 @@
           <children>
             <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="34.0" prefWidth="171.0" text="Free Bottles" textAlignment="CENTER" underline="false" />
             <Separator prefHeight="16.0" prefWidth="171.0" />
-            <ListView prefHeight="324.0" prefWidth="169.0" />
+            <ListView fx:id="freeBottles" prefHeight="324.0" prefWidth="169.0" />
           </children>
         </VBox>
         <VBox prefHeight="366.0" prefWidth="48.0">
@@ -56,18 +61,18 @@
             <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="27.0" prefWidth="152.0" text="Bottles To Add" textAlignment="CENTER" underline="false" />
             <Separator prefHeight="22.0" prefWidth="152.0" />
             <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 750" textAlignment="CENTER" underline="false" />
-            <TextField prefHeight="27.000099999997474" prefWidth="139.0" />
+            <TextField fx:id="firstQuantity" prefHeight="27.000099999997474" prefWidth="139.0" />
             <Separator prefHeight="16.0" prefWidth="152.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 350" textAlignment="CENTER" underline="false" />
-            <TextField prefHeight="32.0" prefWidth="139.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 375" textAlignment="CENTER" underline="false" />
+            <TextField fx:id="secondQuantity" prefHeight="32.0" prefWidth="139.0" />
             <Separator prefHeight="16.0" prefWidth="152.0" />
             <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 200" textAlignment="CENTER" underline="false" />
-            <TextField prefHeight="32.0" prefWidth="139.0" />
+            <TextField fx:id="thirdQuantity" prefHeight="32.0" prefWidth="139.0" />
             <Separator prefHeight="16.0" prefWidth="152.0" />
             <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="22.0" prefWidth="152.0" text="Quantity 187" textAlignment="CENTER" underline="false" />
-            <TextField prefHeight="32.0" prefWidth="139.0" />
+            <TextField fx:id="fourthQuantity" prefHeight="32.0" prefWidth="139.0" />
             <Separator prefHeight="16.0" prefWidth="152.0" />
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="139.0" text="ADD" />
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="139.0" onAction="#onAddBottle" text="ADD" />
           </children>
         </VBox>
       </children>
@@ -76,10 +81,11 @@
       <children>
         <VBox prefHeight="200.0" prefWidth="100.0">
           <children>
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="100.0" text="Logout" />
+            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="100.0" onAction="#Logout" text="Logout" />
           </children>
         </VBox>
       </children>
     </HBox>
   </children>
+</AnchorPane>
 </AnchorPane>

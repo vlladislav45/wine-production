@@ -1,8 +1,8 @@
 package com.uni.wine.dao.impl;
 
-import com.uni.wine.db.JDBCConnector;
+import com.uni.wine.databaselayer.JDBCConnector;
 import com.uni.wine.mappers.VarietyMapper;
-import com.uni.wine.models.Variety;
+import com.uni.wine.businesslayer.entities.Variety;
 
 import java.util.Map;
 

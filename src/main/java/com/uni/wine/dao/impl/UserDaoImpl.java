@@ -1,11 +1,12 @@
 package com.uni.wine.dao.impl;
 
 import com.uni.wine.dao.UserDAO;
-import com.uni.wine.db.JDBCConnector;
+import com.uni.wine.databaselayer.JDBCConnector;
 import com.uni.wine.mappers.UserMapper;
-import com.uni.wine.models.User;
-import com.uni.wine.models.UserRole;
+import com.uni.wine.businesslayer.entities.User;
+import com.uni.wine.businesslayer.entities.UserRole;
 
+import java.util.List;
 import java.util.Map;
 
 public class UserDaoImpl implements UserDAO {
@@ -20,6 +21,15 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
+    public int getHosts() {
+        User user = new User();
+        user.setAccessLevel(new UserRole("HOST"));
+        int roleId = roleDao.getRoleId(user.getAccessLevel().getRoleName());
+
+        return jdbcConnector.getCount(TABLE_NAME, " Where id_role = " + roleId);
+    }
+
+    @Override
     public void changeRole(String username, int idRole) {
 
         String query = "UPDATE " + TABLE_NAME +
@@ -27,6 +37,15 @@ public class UserDaoImpl implements UserDAO {
                                     " WHERE username=?";
 
         jdbcConnector.executeQuery(query, idRole, username);
+    }
+
+    @Override
+    public List<Map<String,Object>> getAllUsers() { // Get all users at database
+
+        String query = "SELECT * FROM " + TABLE_NAME;
+
+        List<Map<String, Object>> result = jdbcConnector.executeQueryWithMultipleResult(query);
+        return result;
     }
 
     //Add user to the database
@@ -84,10 +103,10 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public void removeById(int idUser) {
-        String query = "DELETE FROM " + TABLE_NAME + " WHERE id_user=?";
+    public void removeByUsername(String username) {
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE username=?";
 
-        jdbcConnector.executeQuery(query, idUser);
+        jdbcConnector.executeQuery(query, username);
     }
 
     @Override

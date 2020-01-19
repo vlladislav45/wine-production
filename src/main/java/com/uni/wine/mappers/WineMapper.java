@@ -1,6 +1,6 @@
 package com.uni.wine.mappers;
 
-import com.uni.wine.models.Wine;
+import com.uni.wine.businesslayer.entities.Wine;
 
 import java.util.Map;
 

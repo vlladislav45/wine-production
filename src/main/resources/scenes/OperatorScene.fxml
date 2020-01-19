@@ -14,6 +14,7 @@
             fx:controller="com.uni.wine.controllers.OperatorController">
   <AnchorPane fx:id="initialView">
     <children>
+      <Label fx:id="currentUser" alignment="CENTER" contentDisplay="LEFT" prefHeight="34.0" prefWidth="171.0" text="Hello: " />
       <HBox layoutX="150.0" layoutY="14.0" prefHeight="47.0" prefWidth="516.0">
         <children>
           <Button fx:id="warehouseBtn" mnemonicParsing="false" onAction="#ShowWH" prefHeight="42.0" prefWidth="171.0" text="Warehouse" />
@@ -32,21 +33,21 @@
                 </font>
               </Label>
               <Separator prefHeight="16.0" prefWidth="171.0" />
-              <ListView prefHeight="332.0" prefWidth="171.0" />
+              <ListView fx:id="curentlyStoredWine" prefHeight="332.0" prefWidth="171.0" />
             </children>
           </VBox>
           <VBox prefHeight="382.0" prefWidth="171.0">
             <children>
               <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="34.0" prefWidth="171.0" text="Curently stored grape" textAlignment="CENTER" underline="false" />
               <Separator prefHeight="16.0" prefWidth="171.0" />
-              <ListView prefHeight="332.0" prefWidth="171.0" />
+              <ListView fx:id="curentlyStoredGrape" prefHeight="332.0" prefWidth="171.0" />
             </children>
           </VBox>
           <VBox prefHeight="382.0" prefWidth="171.0">
             <children>
               <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="34.0" prefWidth="171.0" text="Free Bottles" textAlignment="CENTER" underline="false" />
               <Separator prefHeight="16.0" prefWidth="171.0" />
-              <ListView prefHeight="332.0" prefWidth="171.0" />
+              <ListView fx:id="freeBottles" prefHeight="332.0" prefWidth="171.0" />
             </children>
           </VBox>
         </children>
@@ -63,7 +64,7 @@
               <TextField fx:id="attitudeGrapeWine" alignment="CENTER" prefHeight="42.0" prefWidth="516.0" promptText="1:n" />
               <Separator prefHeight="17.0" prefWidth="171.0" />
               <Label alignment="CENTER" font="$x2" prefHeight="22.0" prefWidth="250.0" text="Choose Quantity" />
-              <TextField fx:id="grapeInput" alignment="CENTER" prefHeight="42.0" prefWidth="516.0" />
+              <TextField fx:id="grapeInput" alignment="CENTER" prefHeight="42.0" prefWidth="516.0" promptText="KG" />
               <Separator prefHeight="17.0" prefWidth="171.0" />
               <Label alignment="CENTER" font="$x2" prefHeight="22.0" prefWidth="250.0" text="Choose Type" />
               <ComboBox fx:id="varietyCombobox" prefHeight="42.0" prefWidth="516.0">
@@ -75,7 +76,9 @@
                 </items>
               </ComboBox>
               <Separator prefHeight="17.0" prefWidth="171.0" />
-              <Button fx:id="convertGrape" font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" text="Convert Grape" />
+              <TextField fx:id="wineName" alignment="CENTER" prefHeight="42.0" prefWidth="516.0" promptText="Wine name"/>
+              <Separator prefHeight="17.0" prefWidth="171.0" />
+              <Button fx:id="convertGrape" font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="250.0" onAction="#onConvertGrape" text="Convert Grape" />
             </children>
           </VBox>
           <VBox prefHeight="382.0" prefWidth="26.0">
@@ -85,13 +88,13 @@
           </VBox>
           <VBox prefHeight="382.0" prefWidth="262.0">
             <children>
-              <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="22.0" prefWidth="255.0" text="Total wine" />
+              <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="22.0" prefWidth="255.0" text="Total wine in litres" />
               <TextField fx:id="wineInput" alignment="CENTER" prefWidth="200.0" promptText="Wine" text="" />
               <Separator prefHeight="17.0" prefWidth="171.0" />
               <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="22.0" prefWidth="255.0" text="Bottles Needed" />
-              <ListView prefHeight="200.0" prefWidth="200.0" />
+              <ListView fx:id="fillBottles" prefHeight="200.0" prefWidth="200.0" />
               <Separator prefHeight="17.0" prefWidth="171.0" />
-              <Button fx:id="convertWine" font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="262.0" text="Bottle Up" />
+              <Button fx:id="convertWine" font="$x2" mnemonicParsing="false" prefHeight="47.0" prefWidth="262.0" onAction="#onBottleUp" text="Bottle Up" />
             </children>
           </VBox>
         </children>
@@ -102,20 +105,19 @@
           <VBox prefHeight="382.0" prefWidth="171.00009999999747" visible="true">
             <children>
               <Label alignment="CENTER" font="$x2" prefHeight="34.0" prefWidth="171.0" text="Choose Quantity" />
-              <TextField prefHeight="35.0" prefWidth="171.0" promptText="Quantity" />
+              <TextField fx:id="addGrapeInput" prefHeight="35.0" prefWidth="171.0" promptText="Quantity" />
               <Separator prefHeight="14.0" prefWidth="171.0" />
               <Label alignment="CENTER" contentDisplay="CENTER" font="$x2" prefHeight="34.000099999997474" prefWidth="171.0" text="Choose Variety" />
-              <ComboBox prefHeight="34.0" prefWidth="170.0">
+              <ComboBox fx:id="addVarietyCombobox" prefHeight="34.0" prefWidth="170.0">
                 <items>
                   <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Item 1" />
-                    <String fx:value="Item 2" />
-                    <String fx:value="Item 3" />
+                    <String fx:value="Black" />
+                    <String fx:value="White" />
                   </FXCollections>
                 </items>
               </ComboBox>
               <Separator prefHeight="19.0" prefWidth="171.0" />
-              <Button font="$x2" mnemonicParsing="false" prefHeight="42.0" prefWidth="170.0" text="Add Grape" />
+              <Button fx:id="addGrape" font="$x2" mnemonicParsing="false" prefHeight="42.0" prefWidth="170.0" onAction="#onAddGrapeToWH" text="Add Grape" />
             </children>
           </VBox>
           <VBox prefHeight="382.0" prefWidth="171.0" />

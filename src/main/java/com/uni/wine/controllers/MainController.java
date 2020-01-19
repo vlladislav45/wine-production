@@ -1,7 +1,6 @@
 package com.uni.wine.controllers;
 
-import com.uni.wine.db.JDBCConnector;
-import com.uni.wine.services.ServiceWrapper;
+import com.uni.wine.businesslayer.ServiceWrapper;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -35,7 +34,6 @@ public class MainController {
     private AnchorPane initialView;
     @FXML
     private Button loginBtn;
-
     private ServiceWrapper serviceWrapper;
 
     private static final Logger LOGGER = Logger.getLogger(MainController.class);
@@ -94,12 +92,25 @@ public class MainController {
        loginCheck();
     }
 
-    private void openNewScene() {
+    public void openNewScene() {
         boolean isOperator = serviceWrapper.getUserService().getLoggedUser().getAccessLevel().getRoleName().equals("OPERATOR");
+        boolean isHost = serviceWrapper.getUserService().getLoggedUser().getAccessLevel().getRoleName().equals("HOST");
 
         String operatorScene = "scenes/OperatorScene.fxml";
         String adminScene = "scenes/AdminScene.fxml";
-        String scene = isOperator ? operatorScene : adminScene;
+        String hostScene = "scenes/HostScene.fxml";
+
+        String scene;
+        if(isOperator) {
+            scene = operatorScene;
+        }else if(isHost) {
+            scene = hostScene;
+        }else {
+            scene = adminScene;
+
+        }
+
+        //String scene = isOperator ? operatorScene : adminScene : hostScene;
 
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(scene));
         Parent newParent;
@@ -118,11 +129,18 @@ public class MainController {
             timeline.play();
 
             if(scene.equals(adminScene)) {
-                AdminController nextController = loader.getController();
-                //nextController.initUI();
+                AdminController adminController = loader.getController();
+                adminController.setServiceWrapper(this.serviceWrapper);
+                adminController.initUI();
+            }else if(scene.equals(operatorScene)) {
+                OperatorController operatorController = loader.getController();
+                operatorController.setServiceWrapper(serviceWrapper); // Add service wrapper init to the operator controller
+                operatorController.setUsername(this.username.getText()); // Add username to the next scene
+                operatorController.InitUI();
             }else {
-                OperatorController nextController = loader.getController();
-                //nextController.initUI();
+                HostController hostController = loader.getController();
+                hostController.setServiceWrapper(serviceWrapper);
+                hostController.InitUI();
             }
 
 //            nextController.setMainController(this);
@@ -135,12 +153,10 @@ public class MainController {
 
     @FXML
     void initialize() {
-
-
-
     }
 
     public void setServiceWrapper(ServiceWrapper serviceWrapper) {
         this.serviceWrapper = serviceWrapper;
     }
+
 }

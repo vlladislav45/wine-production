@@ -1,10 +1,10 @@
 package com.uni.wine.dao.impl;
 
 import com.uni.wine.dao.BottleDAO;
-import com.uni.wine.db.JDBCConnector;
-import com.uni.wine.models.Bottle;
-import com.uni.wine.mappers.BottleMapper;
+import com.uni.wine.databaselayer.JDBCConnector;
+import com.uni.wine.businesslayer.entities.Bottle;
 
+import java.util.List;
 import java.util.Map;
 
 public class BottleDaoImpl implements BottleDAO {
@@ -15,7 +15,15 @@ public class BottleDaoImpl implements BottleDAO {
         this.connector = connector;
     }
 
-    //Add user to the database
+    @Override
+    public List<Map<String,Object>> getAllBottles() { // Get all bottles at database
+
+        String query = "SELECT * FROM " + TABLE_NAME;
+
+        List<Map<String, Object>> result = connector.executeQueryWithMultipleResult(query);
+        return result;
+    }
+
     @Override
     public void add(Bottle bottle)
     {
@@ -42,9 +50,14 @@ public class BottleDaoImpl implements BottleDAO {
                         " where bottle_volume = " + volume;
 
         Map<String,Object> result = connector.executeQueryWithSingleResult(query);
-        String quantity = result.values().stream().findFirst().get().toString();
-        int res=Integer.parseInt(quantity);
-        return res;
+
+        if(result.isEmpty()) {
+            return -1;
+        }else {
+            String quantity = result.values().stream().findFirst().get().toString();
+            int res=Integer.parseInt(quantity);
+            return res;
+        }
     }
     @Override
     public void removeBottle(Bottle bottle)

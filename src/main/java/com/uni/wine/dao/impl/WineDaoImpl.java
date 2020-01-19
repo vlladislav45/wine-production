@@ -2,10 +2,11 @@ package com.uni.wine.dao.impl;
 
 import com.uni.wine.dao.GrapeDAO;
 import com.uni.wine.dao.WineDAO;
-import com.uni.wine.db.JDBCConnector;
+import com.uni.wine.databaselayer.JDBCConnector;
 import com.uni.wine.mappers.WineMapper;
-import com.uni.wine.models.Wine;
+import com.uni.wine.businesslayer.entities.Wine;
 
+import java.util.List;
 import java.util.Map;
 
 public class WineDaoImpl implements WineDAO {
@@ -21,23 +22,42 @@ public class WineDaoImpl implements WineDAO {
     }
 
     @Override
+    public int checkWineName(Wine wine) {
+        int idGrape = wine.getGrape().getIdGrape();
+
+        String query = "SELECT * FROM " + TABLE_NAME +
+                       " INNER JOIN grapes on grapes.id_grape = wines.id_grape " +
+                       " WHERE wine_name = '" + wine.getWineName() + "' AND grapes.id_grape = " + idGrape;
+
+        Map<String,Object> result = connector.executeQueryWithSingleResult(query);
+
+        if(result.isEmpty()) {
+            return 0;
+        }else {
+            String idWine = result.values().stream().findFirst().get().toString();
+            int res=Integer.parseInt(idWine);
+            return res;
+        }
+
+    }
+
+    @Override
     public void add(Wine wine) {
         String query = "INSERT INTO " + TABLE_NAME +
                        "(wine_name,id_type,id_grape) VALUES(?,?,?)";
 
         int idTypeWine = wineTypeDao.getWineTypeId(wine.getWineType().getTypeName());
-        int idGrape = grapeDao.getGrapeId(wine.getGrape().getIdGrape());
+        int idGrape = grapeDao.getIdGrapeById(wine.getGrape().getIdGrape());
 
         connector.executeQuery(query, wine.getWineName(), idTypeWine, idGrape);
     }
 
     @Override
-    public void update(String oldWineName, String newWineName) {
-        String query = "UPDATE " + TABLE_NAME +
-                       "SET wine_name = " + newWineName +
-                       "WHERE wine_name = " + oldWineName;
+    public int getIdByGrape(String wineName, int idGrape) {
+        String query = "SELECT * FROM " + TABLE_NAME +
+                " WHERE wine_name = '" + wineName + "' AND id_grape = " + idGrape;
 
-        connector.executeQuery(query, newWineName, oldWineName);
+        return (int) connector.executeQueryWithSingleResult(query).get("id_wine");
     }
 
     @Override
@@ -49,13 +69,13 @@ public class WineDaoImpl implements WineDAO {
     }
 
     @Override
-    public Wine getById(int idWine) {
+    public List<Map<String,Object>> getById(int idWine) {
         String query = "SELECT * FROM " + TABLE_NAME +
                        " WHERE id_wine = " + idWine;
 
-        Map<String,Object> result = connector.executeQueryWithSingleResult(query);
+        List<Map<String,Object>> result = connector.executeQueryWithMultipleResult(query);
 
-        return WineMapper.map(result);
+        return result;
     }
 
     @Override

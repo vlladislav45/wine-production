@@ -7,23 +7,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.uni.wine.controllers.AdminController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
+            xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="com.uni.wine.controllers.AdminController">
+<AnchorPane fx:id="initialView">
   <children>
     <HBox layoutX="332.0" layoutY="118.0" prefHeight="67.0" prefWidth="100.0">
       <children>
         <VBox prefHeight="142.0" prefWidth="100.0">
           <children>
-            <ComboBox prefHeight="21.0" prefWidth="100.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
+            <ComboBox fx:id="users" prefHeight="21.0" prefWidth="100.0">
             </ComboBox>
             <Separator prefHeight="12.0" prefWidth="100.0" />
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" text="Delete User" />
+            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" onAction="#deleteUser" text="Delete User" />
           </children>
         </VBox>
       </children>
@@ -32,11 +29,11 @@
       <children>
         <VBox prefHeight="136.0" prefWidth="140.0">
           <children>
-            <TextField prefWidth="99.9998779296875" />
+            <TextField fx:id="usernameOperator" prefWidth="99.9998779296875" />
             <Separator prefHeight="12.0" prefWidth="100.0" />
-            <TextField prefWidth="200.0" />
+            <PasswordField fx:id="passwordOperator" prefWidth="200.0" />
             <Separator prefHeight="12.0" prefWidth="100.0" />
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Create Operator" />
+            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" onAction="#onCreateOperator" text="Create Operator" />
           </children>
         </VBox>
       </children>
@@ -45,15 +42,16 @@
       <children>
         <VBox prefHeight="136.0" prefWidth="140.0">
           <children>
-            <TextField prefWidth="99.9998779296875" />
+            <TextField fx:id="usernameHost" prefWidth="99.9998779296875" />
             <Separator prefHeight="12.0" prefWidth="100.0" />
-            <TextField prefWidth="200.0" />
+            <PasswordField fx:id="passwordHost" prefWidth="200.0" />
             <Separator prefHeight="12.0" prefWidth="100.0" />
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Create Host" />
+            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" onAction="#onCreateHost" text="Create Host" />
           </children>
         </VBox>
       </children>
     </HBox>
-    <Button layoutX="314.0" layoutY="439.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Logout" />
+    <Button layoutX="314.0" layoutY="439.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" onAction="#Logout" text="Logout" />
   </children>
+</AnchorPane>
 </AnchorPane>

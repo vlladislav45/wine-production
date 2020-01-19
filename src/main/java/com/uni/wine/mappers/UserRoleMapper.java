@@ -1,6 +1,6 @@
 package com.uni.wine.mappers;
 
-import com.uni.wine.models.UserRole;
+import com.uni.wine.businesslayer.entities.UserRole;
 
 import java.util.Map;
 
