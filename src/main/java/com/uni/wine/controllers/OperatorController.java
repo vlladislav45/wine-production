@@ -120,7 +120,7 @@ public class OperatorController<ListArray> {
         }
     }
 
-    void listBottledWineOnCurrentUser() {
+    public void listBottledWineOnCurrentUser() {
         //curentlyStoredWine
         List<Map<String,Object>> currentUserBottledWine = this.serviceWrapper
                                                                     .getBottleService()
@@ -148,7 +148,7 @@ public class OperatorController<ListArray> {
         }
     }
 
-    void listGrapesOnCurrentUser() {
+    public void listGrapesOnCurrentUser() {
         List<Map<String,Object>> currentUserGrapes = this.serviceWrapper
                                                         .getGrapeService()
                                                         .getGrapesOnUser(username); // List with all grapes to the user
@@ -175,7 +175,7 @@ public class OperatorController<ListArray> {
 
     }
 
-    void listAvailableBottles() {
+    public void listAvailableBottles() {
         List<Map<String,Object>> availableBottles = this.serviceWrapper
                 .getBottleService()
                 .getAvailableBottles(); // List with all available bottles
@@ -196,17 +196,13 @@ public class OperatorController<ListArray> {
         }
     }
 
-    void InitUI() {
+    public void InitUI() {
         currentUser.setText("hello " + username); // Show username at the interface
         currentUser.setTextFill(Color.web("#0076a3"));
 
         listBottledWineOnCurrentUser(); // List stored bottled wine for the current user
         listGrapesOnCurrentUser(); // List stored grape for current user
         listAvailableBottles(); // List available bottles in warehouse
-
-        //BottleService bottleService = this.serviceWrapper.getBottleService();
-        //GrapeService grapeService = this.serviceWrapper.getGrapeService();
-
     }
 
     @FXML
@@ -259,6 +255,14 @@ public class OperatorController<ListArray> {
         convertWine.disableProperty().bind(wineInput.textProperty().isEmpty());
     }
 
+    void cleanConvertScreen() {
+        attitudeGrapeWine.clear();
+        grapeInput.clear();
+        wineInput.clear();
+        wineName.clear();
+        fillBottles.getItems().clear();
+    }
+
     @FXML
     void onBottleUp(ActionEvent event) {
         curentlyStoredWine.getItems().clear();
@@ -287,8 +291,11 @@ public class OperatorController<ListArray> {
             bottledWine(wineName.getText(), username, bottleVolume187, bottleQuantity187);
             deleteFilledBottles(bottleVolume187, bottleQuantity187);
 
+        listBottledWineOnCurrentUser();
         listAvailableBottles();
-        listBottledWineOnCurrentUser(); // List stored bottled wine for the current user
+
+        //Clean the screen
+        cleanConvertScreen();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Bottled wines are added to the system!");
         alert.show();
