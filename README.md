@@ -7,9 +7,9 @@ Front End
 * JavaFX
 
 Back end
-Database : MySQL
-Queries: JDBC is an API for accessing relational databases using Java
-Data modeling : DAO pattern
+* Database : MySQL
+* Queries: JDBC is an API for accessing relational databases using Java
+* Data modeling : DAO pattern
 
 Back end:
 * Backend's naming are not ambiguous so no need for project-level naming convention
