@@ -1,7 +1,7 @@
 # winee
 University Project
 
-##For contributors/developers ##Tech Stack
+##For contributors/developers
 
 Front End
 * JavaFX
